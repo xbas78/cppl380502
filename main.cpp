@@ -44,30 +44,31 @@ int main(int argc, char *argv[]) {
 
   QApplication a(argc, argv);
 
-  auto *mainWindow = new QMainWindow(nullptr);
-  auto *mainWidget = new QWidget(mainWindow);
-  auto *hbox = new QHBoxLayout(mainWidget);
-  auto *textEdit = new QPlainTextEdit;
-  auto *webView = new QWebEngineView;
+  QMainWindow mainWindow(nullptr);
+  QWidget mainWidget(&mainWindow);
+  QHBoxLayout hbox(&mainWidget);
+  QPlainTextEdit textEdit;
+  QWebEngineView webView;
 
-  mainWindow->setCentralWidget(mainWidget);
-  mainWindow->setWindowTitle("HTML editor");
+  mainWindow.setCentralWidget(&mainWidget);
+  mainWindow.setWindowTitle("HTML editor");
 
-  hbox->addWidget(textEdit);
-  hbox->addWidget(webView);
+  hbox.addWidget(&textEdit);
+  hbox.addWidget(&webView);
 
   QSizePolicy distributor(QSizePolicy::Preferred, QSizePolicy::Preferred);
   distributor.setHorizontalStretch(1);
 
-  textEdit->setSizePolicy(distributor);
-  webView->setSizePolicy(distributor);
+  textEdit.setSizePolicy(distributor);
+  webView.setSizePolicy(distributor);
 
-  QObject::connect(textEdit, &QPlainTextEdit::textChanged,
-                   [textEdit, webView]() {
-    webView->setHtml(textEdit->toPlainText());
+  QObject::connect(&textEdit, &QPlainTextEdit::textChanged,
+                   [&textEdit, &webView]() {
+    webView.setHtml(textEdit.toPlainText());
     });
 
-    mainWindow->show();
+  mainWindow.show();
 
-    return QApplication::exec();
+  QApplication::exec();
+  return 0;
 }

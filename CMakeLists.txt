@@ -1,33 +1,19 @@
 cmake_minimum_required(VERSION 3.14)
+project(CPPL380502)
 
-set(PROJECT_NAME cppl380502)
-
-project(${PROJECT_NAME} VERSION 1.0.0 LANGUAGES CXX)
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_PREFIX_PATH "C:/Qt/5.15.2/msvc2019_64/lib/cmake")
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets
-                                         WebEngineWidgets
-                                         REQUIRED)
+find_package(Qt5 COMPONENTS Widgets
+                            WebEngineWidgets
+                            REQUIRED)
 
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets
-                                              WebEngineWidgets
-                                              REQUIRED)
+add_executable(CPPL380502 main.cpp)
 
-#set(HEADERS)
-set(SRC main.cpp)
-
-add_executable(${PROJECT_NAME} ${SRC}
-#                               ${HEADERS}
-                           )
-
-target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets
-                                      Qt${QT_VERSION_MAJOR}::WebEngineCore
-                                      Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+target_link_libraries(CPPL380502 Qt5::Widgets
+                                 Qt5::WebEngineCore
+                                 Qt5::WebEngineWidgets)
